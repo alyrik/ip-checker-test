@@ -1,7 +1,14 @@
 import React from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+
+import { CustomMap } from './components/CustomMap/CustomMap';
+import { useGetCurrentLocation } from './actions/queries/getCurrentLocation/useGetCurrentLocation';
 
 function App() {
+  const { data: currentLocationData, isError } = useGetCurrentLocation();
+
+  console.log(currentLocationData);
+  console.log('IS error', isError);
+
   return (
     <div className="grid grid-cols-4 grid-rows-1 gap-4 h-screen p-4">
       <div className="col-span-1">Recent searches</div>
@@ -10,23 +17,18 @@ function App() {
           <div className="row-span-2">
             <div className="grid grid-cols-5 grid-rows-1 gap-4 h-full">
               <div className="col-span-3">
-                <MapContainer
-                  className="w-full h-full"
-                  center={[51.505, -0.09]}
-                  zoom={13}
-                  scrollWheelZoom={false}>
-                  <TileLayer
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                {currentLocationData && (
+                  <CustomMap
+                    latitude={currentLocationData.latitude}
+                    longitude={currentLocationData.longitude}
                   />
-                  <Marker position={[51.505, -0.09]}>
-                    <Popup>
-                      A pretty CSS3 popup. <br /> Easily customizable.
-                    </Popup>
-                  </Marker>
-                </MapContainer>
+                )}
               </div>
-              <div className="col-span-2">Information about user location</div>
+              <div className="col-span-2">
+                IP Address: 94.75.122.122 Latitude: 52.2296 Longitude: 21.0067
+                Country: Poland Region: Mazovia City: Warsaw Organization: UPC
+                Polska
+              </div>
             </div>
           </div>
           <div className="row-span-4">
