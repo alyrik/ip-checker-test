@@ -30,5 +30,10 @@ const prepareItems = (props: IProps) => [
 export const LocationDescription: FC<IProps> = (props) => {
   const items = prepareItems(props);
 
-  return <Description items={items} />;
+  return (
+    <Description
+      items={items}
+      fallbackText="Unfortunately, there's no any information about location."
+    />
+  );
 };

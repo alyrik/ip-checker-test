@@ -7,15 +7,12 @@ interface IItem {
 
 interface IProps {
   items: IItem[];
+  fallbackText?: string;
 }
 
-export const Description: FC<IProps> = ({ items }) => {
-  if (!items)
-    return (
-      <span>
-        Unfortunately, there's no any information about your location.
-      </span>
-    );
+export const Description: FC<IProps> = ({ items, fallbackText }) => {
+  if (!items?.length) return fallbackText ? <span>{fallbackText}</span> : null;
+
   return (
     <dl>
       {items.map(({ name, value }) => (
