@@ -1,12 +1,13 @@
 import React, { FC } from 'react';
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 
-interface Props {
+interface IProps {
   latitude: number;
   longitude: number;
+  markerText: string;
 }
 
-export const CustomMap: FC<Props> = ({ latitude, longitude }) => {
+export const CustomMap: FC<IProps> = ({ latitude, longitude, markerText }) => {
   return (
     <MapContainer
       className="w-full h-full"
@@ -18,9 +19,7 @@ export const CustomMap: FC<Props> = ({ latitude, longitude }) => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <Marker position={[latitude, longitude]}>
-        <Popup>
-          A pretty CSS3 popup. <br /> Easily customizable.
-        </Popup>
+        <Popup>{markerText}</Popup>
       </Marker>
     </MapContainer>
   );

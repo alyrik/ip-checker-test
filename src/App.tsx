@@ -2,12 +2,10 @@ import React from 'react';
 
 import { CustomMap } from './components/CustomMap/CustomMap';
 import { useGetCurrentLocation } from './actions/queries/getCurrentLocation/useGetCurrentLocation';
+import { LocationDescription } from './components/LocationDescription/LocationDescription';
 
 function App() {
   const { data: currentLocationData, isError } = useGetCurrentLocation();
-
-  console.log(currentLocationData);
-  console.log('IS error', isError);
 
   return (
     <div className="grid grid-cols-4 grid-rows-1 gap-4 h-screen p-4">
@@ -21,13 +19,22 @@ function App() {
                   <CustomMap
                     latitude={currentLocationData.latitude}
                     longitude={currentLocationData.longitude}
+                    markerText="That's your location based on your IP. No one said it would match your physical location :)"
                   />
                 )}
               </div>
               <div className="col-span-2">
-                IP Address: 94.75.122.122 Latitude: 52.2296 Longitude: 21.0067
-                Country: Poland Region: Mazovia City: Warsaw Organization: UPC
-                Polska
+                {currentLocationData && (
+                  <LocationDescription
+                    ip={currentLocationData.ip}
+                    country={currentLocationData.country}
+                    countryFlag={currentLocationData.countryFlag}
+                    region={currentLocationData.region}
+                    city={currentLocationData.city}
+                    latitude={currentLocationData.latitude}
+                    longitude={currentLocationData.longitude}
+                  />
+                )}
               </div>
             </div>
           </div>
