@@ -1,21 +1,19 @@
 export interface IRawLocation {
-  ip: string;
-  country_name: string;
-  region_name: string;
+  query: string;
+  country: string;
+  regionName: string;
   city: string;
-  latitude: number;
-  longitude: number;
-  location: {
-    country_flag_emoji: string;
-  };
+  lat: number;
+  lon: number;
+  org: string;
 }
 
 export interface ILocation {
   ip: string;
   country: string;
-  countryFlag: string;
   region: string;
   city: string;
   latitude: number;
   longitude: number;
+  organization: string;
 }

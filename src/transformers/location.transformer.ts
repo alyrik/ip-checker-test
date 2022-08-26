@@ -1,11 +1,11 @@
 import { ILocation, IRawLocation } from '../models/location';
 
 export const locationTransformer = (data: IRawLocation): ILocation => ({
-  ip: data.ip,
-  country: data.country_name,
-  countryFlag: data.location.country_flag_emoji,
-  region: data.region_name,
+  ip: data.query,
+  country: data.country,
+  region: data.regionName,
   city: data.city,
-  latitude: data.latitude,
-  longitude: data.longitude,
+  latitude: data.lat,
+  longitude: data.lon,
+  organization: data.org,
 });

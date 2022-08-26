@@ -22,11 +22,11 @@ export const CurrentLocation: FC = () => {
           <LocationDescription
             ip={currentLocationData.ip}
             country={currentLocationData.country}
-            countryFlag={currentLocationData.countryFlag}
             region={currentLocationData.region}
             city={currentLocationData.city}
             latitude={currentLocationData.latitude}
             longitude={currentLocationData.longitude}
+            organization={currentLocationData.organization}
           />
         )}
       </div>

@@ -1,11 +1,18 @@
 import React, { FC } from 'react';
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
+import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet';
 
 interface IProps {
   latitude: number;
   longitude: number;
   markerText: string;
 }
+
+const ChangeMapView = ({ position }: { position: [number, number] }) => {
+  const map = useMap();
+  map.setView(position, map.getZoom());
+
+  return null;
+};
 
 export const CustomMap: FC<IProps> = ({ latitude, longitude, markerText }) => {
   return (
@@ -21,6 +28,7 @@ export const CustomMap: FC<IProps> = ({ latitude, longitude, markerText }) => {
       <Marker position={[latitude, longitude]}>
         <Popup>{markerText}</Popup>
       </Marker>
+      <ChangeMapView position={[latitude, longitude]} />
     </MapContainer>
   );
 };

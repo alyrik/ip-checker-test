@@ -8,9 +8,11 @@ type Params = {
 };
 
 export async function searchLocation({ queryKey: [_, searchTerm] }: Params) {
-  const response = await axios.get(`${config.baseUrl}/${searchTerm}`, {
-    params: { access_key: config.apiKey },
-  });
+  const response = await axios.get(`${config.baseUrl}/${searchTerm}`);
+
+  if (response.data.status !== 'success') {
+    throw new Error(response.data.error);
+  }
 
   return response.data;
 }

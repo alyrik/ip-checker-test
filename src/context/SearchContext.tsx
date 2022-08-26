@@ -3,10 +3,16 @@ import { createContext, FC, ReactNode, useEffect, useState } from 'react';
 import { useSearchLocation } from '../actions/queries/searchLocation/useSearchLocation';
 import { ILocation } from '../models/location';
 
+type UpdateSearchTerm = (
+  value: string,
+  params?: { shouldSkipRecentSearch?: boolean },
+) => void;
+
 interface ISearchContext {
   searchTerm: string;
-  updateSearchTerm(value: string): void;
+  updateSearchTerm: UpdateSearchTerm;
   foundLocation: ILocation | undefined;
+  recentSearches: string[];
 }
 
 export const SearchContext = createContext<ISearchContext | null>(null);
@@ -15,9 +21,16 @@ export const SearchContextProvider: FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [recentSearches, setRecentSearches] = useState<string[]>([]);
+  const [shouldSkipRecentSearch, setShouldSkipRecentSearch] = useState(false);
 
   const { data: foundLocation, refetch } = useSearchLocation(searchTerm, {
     isEnabled: false,
+    onSuccess() {
+      if (!shouldSkipRecentSearch) {
+        setRecentSearches([searchTerm, ...recentSearches]);
+      }
+    },
   });
 
   useEffect(() => {
@@ -26,13 +39,14 @@ export const SearchContextProvider: FC<{ children: ReactNode }> = ({
     }
   }, [searchTerm]);
 
-  const updateSearchTerm = (value: string) => {
+  const updateSearchTerm: UpdateSearchTerm = (value: string, params) => {
     setSearchTerm(value);
+    setShouldSkipRecentSearch(params?.shouldSkipRecentSearch ?? false);
   };
 
   return (
     <SearchContext.Provider
-      value={{ searchTerm, updateSearchTerm, foundLocation }}>
+      value={{ searchTerm, updateSearchTerm, foundLocation, recentSearches }}>
       {children}
     </SearchContext.Provider>
   );
