@@ -13,6 +13,7 @@ interface ISearchContext {
   updateSearchTerm: UpdateSearchTerm;
   foundLocation: ILocation | undefined;
   recentSearches: string[];
+  isError: boolean;
 }
 
 export const SearchContext = createContext<ISearchContext | null>(null);
@@ -24,7 +25,11 @@ export const SearchContextProvider: FC<{ children: ReactNode }> = ({
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const [shouldSkipRecentSearch, setShouldSkipRecentSearch] = useState(false);
 
-  const { data: foundLocation, refetch } = useSearchLocation(searchTerm, {
+  const {
+    data: foundLocation,
+    isError,
+    refetch,
+  } = useSearchLocation(searchTerm, {
     isEnabled: false,
     onSuccess() {
       if (!shouldSkipRecentSearch) {
@@ -46,7 +51,13 @@ export const SearchContextProvider: FC<{ children: ReactNode }> = ({
 
   return (
     <SearchContext.Provider
-      value={{ searchTerm, updateSearchTerm, foundLocation, recentSearches }}>
+      value={{
+        searchTerm,
+        updateSearchTerm,
+        foundLocation,
+        recentSearches,
+        isError,
+      }}>
       {children}
     </SearchContext.Provider>
   );

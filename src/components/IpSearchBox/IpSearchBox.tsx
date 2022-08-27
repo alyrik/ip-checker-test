@@ -1,12 +1,32 @@
-import React, { ChangeEvent, FC, FormEvent, useContext, useState } from 'react';
+import React, {
+  ChangeEvent,
+  FC,
+  FormEvent,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import isIP from 'validator/lib/isIP';
+import isFQDN from 'validator/lib/isFQDN';
+
 import { SearchContext } from '../../context/SearchContext';
 
-interface IProps {}
+const isValueValid = (value: string) => {
+  const trimmedValue = value.trim();
+  return isIP(trimmedValue) || isFQDN(trimmedValue);
+};
 
-export const IpSearchBox: FC<IProps> = ({}) => {
+export const IpSearchBox: FC = () => {
   const [inputValue, setInputValue] = useState('');
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
-  const { searchTerm, updateSearchTerm } = useContext(SearchContext)!;
+  const { searchTerm, updateSearchTerm, isError } = useContext(SearchContext)!;
+
+  useEffect(() => {
+    if (searchTerm !== inputValue) {
+      setInputValue(searchTerm);
+    }
+  }, [searchTerm]);
 
   const handleFormSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -16,19 +36,32 @@ export const IpSearchBox: FC<IProps> = ({}) => {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
 
-    setInputValue(e.target.value);
+    const { value } = e.target;
+
+    setInputValue(value);
+    setIsButtonDisabled(!isValueValid(value));
   };
 
   return (
     <form className="flex gap-2" noValidate={true} onSubmit={handleFormSubmit}>
       <input
-        className="flex-1 border-2"
+        className={`flex-1 border-2
+        ${
+          isError
+            ? 'border-red-600 focus:border-red-600 focus:outline-red-600'
+            : 'border-black'
+        } p-1`}
         type="text"
         placeholder="IP or domain name"
         value={inputValue}
         onChange={handleInputChange}
       />
-      <button className="w-20 flex-shrink-0 bg-black text-white">Search</button>
+      <button
+        type="submit"
+        disabled={isButtonDisabled}
+        className="w-20 flex-shrink-0 bg-black text-white disabled:bg-gray-300 disabled:cursor-not-allowed">
+        Search
+      </button>
     </form>
   );
 };

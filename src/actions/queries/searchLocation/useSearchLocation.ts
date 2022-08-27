@@ -12,6 +12,7 @@ export function useSearchLocation(
     staleTime: Infinity,
     select: locationTransformer,
     enabled: params.isEnabled,
+    retry: false,
     onSuccess: params.onSuccess,
   });
 }
