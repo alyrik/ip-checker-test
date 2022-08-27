@@ -4,7 +4,7 @@ import { LocationDescription } from '../LocationDescription/LocationDescription'
 import { SearchContext } from '../../context/SearchContext';
 
 export const FoundLocation: FC = () => {
-  const { foundLocation } = useContext(SearchContext)!;
+  const { foundLocation, isError } = useContext(SearchContext)!;
 
   return (
     <div className="grid grid-cols-5 grid-rows-1 gap-4 h-full">

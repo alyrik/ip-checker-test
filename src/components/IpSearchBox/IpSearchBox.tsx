@@ -43,25 +43,28 @@ export const IpSearchBox: FC = () => {
   };
 
   return (
-    <form className="flex gap-2" noValidate={true} onSubmit={handleFormSubmit}>
-      <input
-        className={`flex-1 border-2
+    <form noValidate={true} onSubmit={handleFormSubmit}>
+      <h2 className="font-bold mb-2">Search:</h2>
+      <div className="flex gap-2">
+        <input
+          className={`flex-1 border-2
         ${
           isError
             ? 'border-red-600 focus:border-red-600 focus:outline-red-600'
             : 'border-black'
         } p-1`}
-        type="text"
-        placeholder="IP or domain name"
-        value={inputValue}
-        onChange={handleInputChange}
-      />
-      <button
-        type="submit"
-        disabled={isButtonDisabled}
-        className="w-20 flex-shrink-0 bg-black text-white disabled:bg-gray-300 disabled:cursor-not-allowed">
-        Search
-      </button>
+          type="text"
+          placeholder="IP or domain name"
+          value={inputValue}
+          onChange={handleInputChange}
+        />
+        <button
+          type="submit"
+          disabled={isButtonDisabled}
+          className="w-20 flex-shrink-0 bg-black text-white disabled:bg-gray-300 disabled:cursor-not-allowed">
+          Search
+        </button>
+      </div>
     </form>
   );
 };
