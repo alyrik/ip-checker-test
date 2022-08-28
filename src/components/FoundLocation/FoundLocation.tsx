@@ -15,8 +15,10 @@ const errorMessages = {
 export const FoundLocation: FC = () => {
   const { foundLocation, isError, errorType } = useContext(SearchContext)!;
 
+  if (!foundLocation && !isError) return null;
+
   return (
-    <div className="grid grid-cols-5 grid-rows-1 gap-4 h-full">
+    <div className="flex flex-col lg:grid grid-cols-1 lg:grid-cols-5 grid-rows-1 gap-4 h-full">
       <div className="col-span-3">
         {foundLocation && (
           <CustomMap

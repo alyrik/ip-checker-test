@@ -7,18 +7,18 @@ import RecentSearches from './components/RecentSearches/RecentSearches';
 
 function App() {
   return (
-    <div className="grid grid-cols-5 grid-rows-1 gap-4 min-h-screen p-4">
-      <div className="col-span-1 h-full overflow-auto">
+    <div className="grid grid-cols-1 lg:grid-cols-5 grid-rows-1 gap-8 lg:gap-4 min-h-screen p-4">
+      <div className="order-2 lg:order-1 col-span-1 h-full overflow-auto">
         <RecentSearches />
       </div>
-      <div className="col-span-4">
-        <div className="grid grid-rows-6 gap-4 min-h-full">
+      <div className="order-1 lg:order-2 col-span-4">
+        <div className="flex flex-col lg:grid grid-rows-6 gap-8 lg:gap-4 min-h-full">
           <div className="row-span-2 grid">
             <CurrentLocation />
           </div>
           <div className="row-span-4">
-            <div className="grid grid-rows-6 gap-4 h-full">
-              <div className="row-span-1 grid grid-cols-5 gap-4 items-end">
+            <div className="flex flex-col lg:grid grid-rows-6 gap-4 h-full">
+              <div className="row-span-1 lg:grid grid-cols-5 gap-8 lg:gap-4 items-end">
                 <div className="col-span-3">
                   <IpSearchBox />
                 </div>

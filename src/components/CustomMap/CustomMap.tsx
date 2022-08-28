@@ -17,7 +17,7 @@ const ChangeMapView = ({ position }: { position: [number, number] }) => {
 export const CustomMap: FC<IProps> = ({ latitude, longitude, markerText }) => {
   return (
     <MapContainer
-      className="w-full h-full"
+      className="w-full h-full min-h-[250px]"
       center={[latitude, longitude]}
       zoom={13}
       scrollWheelZoom={false}>
