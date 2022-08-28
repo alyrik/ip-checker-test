@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { IpSearchBox } from './components/IpSearchBox/IpSearchBox';
+import { SearchBox } from './components/SearchBox/SearchBox';
 import { CurrentLocation } from './components/CurrentLocation/CurrentLocation';
 import { FoundLocation } from './components/FoundLocation/FoundLocation';
 import RecentSearches from './components/RecentSearches/RecentSearches';
@@ -20,7 +20,7 @@ function App() {
             <div className="flex flex-col lg:grid grid-rows-6 gap-4 h-full">
               <div className="row-span-1 lg:grid grid-cols-5 gap-8 lg:gap-4 items-end">
                 <div className="col-span-3">
-                  <IpSearchBox />
+                  <SearchBox />
                 </div>
               </div>
               <div className="row-span-5">

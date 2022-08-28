@@ -1,4 +1,0 @@
-jest.mock('leaflet');
-
-export {};
-

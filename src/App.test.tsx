@@ -4,8 +4,8 @@ import mockAxios from 'jest-mock-axios';
 import axios from 'axios';
 
 import App from './App';
-import { QueryClientProviderMock } from './tests/QueryClientProvider.mock';
-import { SearchContextProvider } from './context/SearchContext';
+import { QueryClientProviderMock } from './tests/mocks/QueryClientProvider.mock';
+import { SearchContextProviderMock } from './tests/mocks/SearchContextProvider.mock';
 
 describe('App', () => {
   beforeEach(() => {
@@ -16,9 +16,9 @@ describe('App', () => {
   it('renders main blocks', () => {
     render(
       <QueryClientProviderMock>
-        <SearchContextProvider>
+        <SearchContextProviderMock>
           <App />
-        </SearchContextProvider>
+        </SearchContextProviderMock>
       </QueryClientProviderMock>,
     );
 

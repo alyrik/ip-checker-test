@@ -5,14 +5,14 @@ import { ILocation } from '../models/location';
 import { LocationRequestErrorType } from '../classes/LocationRequestError';
 import { StorageService } from '../services/StorageService';
 
-type UpdateSearchTerm = (
+export type UpdateSearchTerm = (
   value: string,
   params?: { shouldSkipRecentSearch?: boolean },
 ) => void;
 
 type RecentSearches = string[];
 
-interface ISearchContext {
+export interface ISearchContext {
   searchTerm: string;
   updateSearchTerm: UpdateSearchTerm;
   foundLocation: ILocation | undefined;

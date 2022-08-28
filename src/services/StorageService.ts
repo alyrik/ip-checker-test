@@ -9,7 +9,6 @@ export class StorageService {
 
   public getItem<TData>(key: string): TData | null {
     const rawData = this.storageProvider.getItem(key);
-    console.log('RAW', rawData);
     return rawData ? JSON.parse(rawData) : rawData;
   }
 }

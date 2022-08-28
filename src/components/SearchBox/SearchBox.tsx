@@ -16,7 +16,7 @@ const isValueValid = (value: string) => {
   return isIP(trimmedValue) || isFQDN(trimmedValue);
 };
 
-export const IpSearchBox: FC = () => {
+export const SearchBox: FC = () => {
   const [inputValue, setInputValue] = useState('');
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
