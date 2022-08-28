@@ -2,9 +2,10 @@ import React, { FC } from 'react';
 import { CustomMap } from '../CustomMap/CustomMap';
 import { LocationDescription } from '../LocationDescription/LocationDescription';
 import { useGetCurrentLocation } from '../../actions/queries/getCurrentLocation/useGetCurrentLocation';
+import Message from '../Message/Message';
 
 export const CurrentLocation: FC = () => {
-  const { data: currentLocationData } = useGetCurrentLocation();
+  const { data: currentLocationData, isError } = useGetCurrentLocation();
 
   return (
     <div className="flex flex-col">
@@ -17,6 +18,11 @@ export const CurrentLocation: FC = () => {
               longitude={currentLocationData.longitude}
               markerText="That's your location based on your IP. No one said it would match your physical location :)"
             />
+          )}
+          {isError && (
+            <Message type="error">
+              Something went wrong. We're unable to detect your location.
+            </Message>
           )}
         </div>
         <div className="col-span-2">
