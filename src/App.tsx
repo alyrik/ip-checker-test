@@ -12,13 +12,13 @@ function App() {
         <RecentSearches />
       </div>
       <div className="col-span-4">
-        <div className="grid grid-rows-6 gap-4 h-full">
-          <div className="row-span-2 flex flex-col">
+        <div className="grid grid-rows-6 gap-4 min-h-full">
+          <div className="row-span-2 grid">
             <CurrentLocation />
           </div>
           <div className="row-span-4">
             <div className="grid grid-rows-6 gap-4 h-full">
-              <div className="row-span-1 grid grid-cols-5 items-end">
+              <div className="row-span-1 grid grid-cols-5 gap-4 items-end">
                 <div className="col-span-3">
                   <IpSearchBox />
                 </div>

@@ -2,6 +2,10 @@ import { createContext, FC, ReactNode, useEffect, useState } from 'react';
 
 import { useSearchLocation } from '../actions/queries/searchLocation/useSearchLocation';
 import { ILocation } from '../models/location';
+import {
+  LocationRequestError,
+  LocationRequestErrorType,
+} from '../classes/LocationRequestError';
 
 type UpdateSearchTerm = (
   value: string,
@@ -14,6 +18,7 @@ interface ISearchContext {
   foundLocation: ILocation | undefined;
   recentSearches: string[];
   isError: boolean;
+  errorType: LocationRequestErrorType | undefined;
 }
 
 export const SearchContext = createContext<ISearchContext | null>(null);
@@ -29,6 +34,7 @@ export const SearchContextProvider: FC<{ children: ReactNode }> = ({
     data: foundLocation,
     isError,
     refetch,
+    error,
   } = useSearchLocation(searchTerm, {
     isEnabled: false,
     onSuccess() {
@@ -57,6 +63,7 @@ export const SearchContextProvider: FC<{ children: ReactNode }> = ({
         foundLocation,
         recentSearches,
         isError,
+        errorType: error?.type,
       }}>
       {children}
     </SearchContext.Provider>

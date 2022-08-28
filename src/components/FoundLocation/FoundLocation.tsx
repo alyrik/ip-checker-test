@@ -2,9 +2,18 @@ import React, { FC, useContext } from 'react';
 import { CustomMap } from '../CustomMap/CustomMap';
 import { LocationDescription } from '../LocationDescription/LocationDescription';
 import { SearchContext } from '../../context/SearchContext';
+import Message from '../Message/Message';
+import { LocationRequestError } from '../../classes/LocationRequestError';
+
+const errorMessages = {
+  [LocationRequestError.ErrorType.General]:
+    'Request failed. Please try again or reload the page.',
+  [LocationRequestError.ErrorType.NotFound]:
+    'Search was not successful. Try another query.',
+};
 
 export const FoundLocation: FC = () => {
-  const { foundLocation, isError } = useContext(SearchContext)!;
+  const { foundLocation, isError, errorType } = useContext(SearchContext)!;
 
   return (
     <div className="grid grid-cols-5 grid-rows-1 gap-4 h-full">
@@ -15,6 +24,11 @@ export const FoundLocation: FC = () => {
             longitude={foundLocation.longitude}
             markerText="That's your location based on your search."
           />
+        )}
+        {isError && (
+          <Message type="error">
+            {errorType ? errorMessages[errorType] : 'Something went wrong.'}
+          </Message>
         )}
       </div>
       <div className="col-span-2">

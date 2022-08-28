@@ -1,18 +1,32 @@
 import axios from 'axios';
 
 import { config } from '../../../config/ipChecker';
-import { QueryKey } from '../index';
+import { LocationRequestError } from '../../../classes/LocationRequestError';
+import { IRawLocation } from '../../../models/location';
+import { QueryFunction } from '@tanstack/react-query';
 
-type Params = {
-  queryKey: [QueryKey, string];
-};
+type SearchLocation = QueryFunction<IRawLocation>;
 
-export async function searchLocation({ queryKey: [_, searchTerm] }: Params) {
-  const response = await axios.get(`${config.baseUrl}/${searchTerm}`);
+export const searchLocation: SearchLocation = async ({
+  queryKey: [_, searchTerm],
+}) => {
+  let response;
+
+  try {
+    response = await axios.get(`${config.baseUrl}/${searchTerm}`);
+  } catch (e) {
+    throw new LocationRequestError(
+      LocationRequestError.ErrorType.General,
+      'Network error',
+    );
+  }
 
   if (response.data.status !== 'success') {
-    throw new Error(response.data.error);
+    throw new LocationRequestError(
+      LocationRequestError.ErrorType.NotFound,
+      'Search was not successful',
+    );
   }
 
   return response.data;
-}
+};
