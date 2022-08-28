@@ -2,14 +2,14 @@ import React, { FC, ReactNode } from 'react';
 
 import { SearchContext, UpdateSearchTerm } from '../../context/SearchContext';
 
-interface Props {
+interface IProps {
   children: ReactNode;
   searchTerm?: string;
   updateSearchTerm?: UpdateSearchTerm;
   isError?: boolean;
 }
 
-export const SearchContextProviderMock: FC<Props> = ({
+export const SearchContextProviderMock: FC<IProps> = ({
   children,
   searchTerm,
   updateSearchTerm,
