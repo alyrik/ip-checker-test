@@ -8,12 +8,23 @@ import React, {
 } from 'react';
 import isIP from 'validator/lib/isIP';
 import isFQDN from 'validator/lib/isFQDN';
+import isURL from 'validator/lib/isURL';
 
 import { SearchContext } from '../../context/SearchContext';
 
 const isValueValid = (value: string) => {
   const trimmedValue = value.trim();
-  return isIP(trimmedValue) || isFQDN(trimmedValue);
+  return isIP(trimmedValue) || isFQDN(trimmedValue) || isURL(trimmedValue);
+};
+
+const prepareValue = (value: string) => {
+  return [
+    (value: string) => value.trim(),
+    (value: string) =>
+      !isIP(value) && !isFQDN(value) && isURL(value)
+        ? new URL(value).host
+        : value,
+  ].reduce((value, transformer) => transformer(value), value);
 };
 
 export const SearchBox: FC = () => {
@@ -30,7 +41,10 @@ export const SearchBox: FC = () => {
 
   const handleFormSubmit = (e: FormEvent) => {
     e.preventDefault();
-    updateSearchTerm(inputValue.trim());
+
+    if (isValueValid(inputValue)) {
+      updateSearchTerm(prepareValue(inputValue));
+    }
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {

@@ -31,21 +31,34 @@ describe('SearchBox', () => {
     expect(button).toBeEnabled();
   });
 
-  it('triggers context callback on submit', async () => {
-    const updateSearchTermMock = jest.fn();
-    const { user } = renderWithUserEvent(
-      <SearchContextProviderMock updateSearchTerm={updateSearchTermMock}>
-        <SearchBox />
-      </SearchContextProviderMock>,
-    );
-    const input = getInput();
-    const button = getButton();
+  describe('Successful search', () => {
+    it('triggers context callback on submit', async () => {
+      let calledTimes = 0;
+      const updateSearchTermMock = jest.fn();
+      const { user } = renderWithUserEvent(
+        <SearchContextProviderMock updateSearchTerm={updateSearchTermMock}>
+          <SearchBox />
+        </SearchContextProviderMock>,
+      );
+      const input = getInput();
+      const button = getButton();
 
-    await user.type(input, '  google.com  ');
-    await user.click(button);
+      const testData = [
+        ['  google.com  ', 'google.com'],
+        ['https://amazon.com/test', 'amazon.com'],
+        ['123.123.123.123  ', '123.123.123.123'],
+        ['http://123.123.123.123  ', '123.123.123.123'],
+      ];
 
-    expect(updateSearchTermMock).toHaveBeenCalledTimes(1);
-    expect(updateSearchTermMock).toHaveBeenCalledWith('google.com');
+      for (const [inputData, expectedData] of testData) {
+        await user.clear(input);
+        await user.type(input, inputData);
+        await user.click(button);
+
+        await expect(updateSearchTermMock).toHaveBeenCalledTimes(++calledTimes);
+        await expect(updateSearchTermMock).toHaveBeenCalledWith(expectedData);
+      }
+    });
   });
 
   it('styles input properly on error', async () => {
