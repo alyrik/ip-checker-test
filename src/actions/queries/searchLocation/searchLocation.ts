@@ -3,13 +3,10 @@ import axios from 'axios';
 import { config } from '../../../config/ipChecker';
 import { LocationRequestError } from '../../../classes/LocationRequestError';
 import { IRawLocation } from '../../../models/location';
-import { QueryFunction } from '@tanstack/react-query';
 
-type SearchLocation = QueryFunction<IRawLocation>;
-
-export const searchLocation: SearchLocation = async ({
-  queryKey: [_, searchTerm],
-}) => {
+export const searchLocation = async (
+  searchTerm: string,
+): Promise<IRawLocation> => {
   let response;
 
   try {

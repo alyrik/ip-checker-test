@@ -10,6 +10,7 @@ const RecentSearches: FC = () => {
   return (
     <div>
       <h2 className="font-bold mb-2">Recent searches:</h2>
+      {!recentSearches.length && 'No recent searches yet.'}
       {recentSearches.map((searchTerm, index) => (
         <button
           className="mb-1 text-blue-400 hover:text-blue-200 transition-colors block max-w-full"

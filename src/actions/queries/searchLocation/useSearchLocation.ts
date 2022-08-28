@@ -12,7 +12,7 @@ export function useSearchLocation(
 ) {
   return useQuery<IRawLocation, LocationRequestError, ILocation>(
     [QueryKey.SearchLocation, searchTerm],
-    searchLocation,
+    () => searchLocation(searchTerm),
     {
       staleTime: Infinity,
       select: locationTransformer,

@@ -1,0 +1,4 @@
+jest.mock('leaflet');
+
+export {};
+

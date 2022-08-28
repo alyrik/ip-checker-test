@@ -44,9 +44,12 @@ export const IpSearchBox: FC = () => {
 
   return (
     <form noValidate={true} onSubmit={handleFormSubmit}>
-      <h2 className="font-bold mb-2">Search:</h2>
+      <label className="block font-bold mb-2" htmlFor="search-input">
+        Search:
+      </label>
       <div className="flex gap-2">
         <input
+          id="search-input"
           className={`flex-1 border-2
         ${
           isError
@@ -54,6 +57,7 @@ export const IpSearchBox: FC = () => {
             : 'border-black'
         } p-1`}
           type="text"
+          title="Search by IP or domain name"
           placeholder="IP or domain name"
           value={inputValue}
           onChange={handleInputChange}
